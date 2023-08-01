@@ -28,14 +28,7 @@ On your C# script, import
 using Plugins.Survicate;
 ```
 
-For intializing a survicate SDK;
-
-```
-  Survicate.SetWorkspaceKey({{ WORKSPACE_KEY }});
-  Survicate.Initialize();
-```
-
-Additional methods:
+SDK methods:
 
 - **SetWorkspaceKey(string key)**: This method is used to set the workspace key.
 
