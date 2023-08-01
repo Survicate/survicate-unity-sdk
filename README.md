@@ -34,3 +34,47 @@ For intializing a survicate SDK;
   Survicate.SetWorkspaceKey({{ WORKSPACE_KEY }});
   Survicate.Initialize();
 ```
+
+Additional methods:
+
+- **SetWorkspaceKey(string key)**: This method is used to set the workspace key.
+
+```csharp
+  Survicate.SetWorkspaceKey("your_workspace_key");
+```
+
+- **Initialize()**: This method is used to initialize the Survicate SDK.
+
+```csharp
+  Survicate.Initialize();
+```
+
+- **EnterScreen(string screenKey)**: This method is used to set the current screen.
+
+```csharp
+  Survicate.EnterScreen("your_screen_key");
+```
+
+- **LeaveScreen(string screenKey)**: This method is used when the user leaves the current screen.
+
+```csharp
+  Survicate.LeaveScreen("your_screen_key");
+```
+
+- **InvokeEvent(string eventName)**: This method is used to invoke an event.
+
+```csharp
+  Survicate.InvokeEvent("your_event_name");
+```
+
+- **SetUserTrait(string traitKey, string traitValue)**: This method is used to set user traits.
+
+```csharp
+  Survicate.SetUserTrait("your_trait_key", "your_trait_value");
+```
+
+- **Reset()**: This method is used to reset the Survicate SDK.
+
+```csharp
+  Survicate.Reset();
+```
