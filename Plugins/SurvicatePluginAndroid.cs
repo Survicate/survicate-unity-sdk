@@ -6,43 +6,43 @@ namespace Plugins.Survicate
 
     public class Survicate
     {
-        static AndroidJavaObject jc = new AndroidJavaClass("com.survicate.surveys.Survicate");
-        static AndroidJavaClass sc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"); 
-        static AndroidJavaObject so = sc.GetStatic<AndroidJavaObject>("currentActivity");
+        static AndroidJavaObject survicate = new AndroidJavaClass("com.survicate.surveys.Survicate");
+        static AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        static AndroidJavaObject context = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
 
         public static void SetWorkspaceKey(string key)
         {
-            jc.CallStatic("setWorkspaceKey", key);
+            survicate.CallStatic("setWorkspaceKey", key);
         }
 
         public static void Initialize()
         {
-            jc.CallStatic("init", so);
+            survicate.CallStatic("init", context);
         }
 
-        public static void EnterScreen(string screenKey)
+        public static void EnterScreen(string screescnKey)
         {
-            jc.CallStatic("enterScreen", screenKey);
+            survicate.CallStatic("enterScreen", screenKey);
         }
 
         public static void LeaveScreen(string screenKey)
         {
-            jc.CallStatic("leaveScreen", screenKey);
+            survicate.CallStatic("leaveScreen", screenKey);
         }
 
         public static void InvokeEvent(string eventName)
         {
-            jc.CallStatic("invokeEvent", eventName);
+            survicate.CallStatic("invokeEvent", eventName);
         }
 
         public static void SetUserTrait(string traitKey, string traitValue)
         {
-            jc.CallStatic("setUserTrait", traitKey, traitValue);
+            survicate.CallStatic("setUserTrait", traitKey, traitValue);
         }
 
         public static void Reset()
         {
-            jc.CallStatic("reset");
+            survicate.CallStatic("reset");
         }
     }
 }
