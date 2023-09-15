@@ -20,54 +20,61 @@ Inside your exported Xcode project, on **Build Phases -> Link Binary With Librar
 - Make sure **Android** is selected as plugin platform on **Inspector window**
   > Add dependencies listed in developers documentations [here](https://developers.survicate.com/mobile-sdk/android/#installing-manually)
 
+## Configuration
+
+### Configuration for Android
+
+1. Configure your *workspace key* in `AndroidManifest.xml` file.
+
+```xml {{title: 'AndroidManifest.xml'}}
+<application
+    android:name=".MyApp"
+>
+    <!-- ... -->
+    <meta-data android:name="com.survicate.surveys.workspaceKey" android:value="YOUR_WORKSPACE_KEY"/>
+</application>
+```
+
+2. Add the Survicate Maven repository to your project `build.gradle` located under `android` directory.
+
+```groovy {{title: "Project's build.gradle" }}
+allprojects {
+    repositories {
+        // ...
+        maven { url 'https://repo.survicate.com' }
+    }
+}
+```
+
+### Configuration for iOS
+
+1. Add workspace key to your `Info.plist` file.
+   - Create `Survicate` *Dictionary*.
+   - Define `WorkspaceKey` *String* in `Survicate` *Dictionary*.
+   Your `Info.plist` file should looks like this:
+   ![Info.plist example](/ios-infoplist.png)
+2. Run `pod update` in your `ios` directory.
+
+### Initialization
+
+Initialize the SDK in your application using `initializeSdk()` method. Call this method only once, in the main script of your project.
+
 ## Usage
 
 On your C# script, import
 
-```
+```csharp
 using Plugins.Survicate;
+
+Survicate.SetWorkspaceKey("your_workspace_key");
+Survicate.Initialize();
+Survicate.EnterScreen("your_screen_key");
+Survicate.LeaveScreen("your_screen_key");
+Survicate.InvokeEvent("your_event_name");
+Survicate.SetUserTrait("your_trait_key", "your_trait_value");
+Survicate.Reset();
 ```
 
-SDK methods:
+## Changelog
 
-- **SetWorkspaceKey(string key)**: This method is used to set the workspace key.
-
-```csharp
-  Survicate.SetWorkspaceKey("your_workspace_key");
-```
-
-- **Initialize()**: This method is used to initialize the Survicate SDK.
-
-```csharp
-  Survicate.Initialize();
-```
-
-- **EnterScreen(string screenKey)**: This method is used to set the current screen.
-
-```csharp
-  Survicate.EnterScreen("your_screen_key");
-```
-
-- **LeaveScreen(string screenKey)**: This method is used when the user leaves the current screen.
-
-```csharp
-  Survicate.LeaveScreen("your_screen_key");
-```
-
-- **InvokeEvent(string eventName)**: This method is used to invoke an event.
-
-```csharp
-  Survicate.InvokeEvent("your_event_name");
-```
-
-- **SetUserTrait(string traitKey, string traitValue)**: This method is used to set user traits.
-
-```csharp
-  Survicate.SetUserTrait("your_trait_key", "your_trait_value");
-```
-
-- **Reset()**: This method is used to reset the Survicate SDK.
-
-```csharp
-  Survicate.Reset();
-```
+The Survicate Mobile SDK change log can be found [here](https://developers.survicate.com/mobile-sdk/unity/#changelog)
