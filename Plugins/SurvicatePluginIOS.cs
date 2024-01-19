@@ -50,6 +50,7 @@ namespace Plugins.Survicate
         [DllImport("__Internal")]
         private static extern void setUserTrait(string traitKey, string traitValue);
 
+        [Obsolete("SetUserTrait(string, string) is deprecated, please use SetUserTrait(UserTrait) instead.")]
         public static void SetUserTrait(string traitKey, string traitValue)
         {
             setUserTrait(traitKey, traitValue);

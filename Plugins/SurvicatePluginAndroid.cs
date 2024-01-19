@@ -35,6 +35,7 @@ namespace Plugins.Survicate
             survicate.CallStatic("invokeEvent", eventName);
         }
 
+        [Obsolete("SetUserTrait(string, string) is deprecated, please use SetUserTrait(UserTrait) instead.")]
         public static void SetUserTrait(string traitKey, string traitValue)
         {
             survicate.CallStatic("setUserTrait", traitKey, traitValue);
