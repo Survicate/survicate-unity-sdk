@@ -1,4 +1,5 @@
 #if UNITY_ANDROID
+using System;
 
 namespace Plugins.Survicate
 {

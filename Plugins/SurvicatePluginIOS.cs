@@ -1,4 +1,5 @@
 #if UNITY_IOS
+using System;
 
 namespace Plugins.Survicate
 {
