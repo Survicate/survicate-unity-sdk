@@ -6,7 +6,7 @@ namespace Plugins.Survicate
 
     public class Survicate
     {
-        static AndroidJavaObject survicate = new AndroidJavaClass("com.survicate.surveys.Survicate");
+        static AndroidJavaObject survicate = new AndroidJavaClass("SurvicateNativeBridgeAndroid");
         static AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         static AndroidJavaObject context = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
 
@@ -17,10 +17,10 @@ namespace Plugins.Survicate
 
         public static void Initialize()
         {
-            survicate.CallStatic("init", context);
+            survicate.CallStatic("initialize", context);
         }
 
-        public static void EnterScreen(string screescnKey)
+        public static void EnterScreen(string screenKey)
         {
             survicate.CallStatic("enterScreen", screenKey);
         }
@@ -38,6 +38,11 @@ namespace Plugins.Survicate
         public static void SetUserTrait(string traitKey, string traitValue)
         {
             survicate.CallStatic("setUserTrait", traitKey, traitValue);
+        }
+
+        public static void SetUserTrait(UserTrait trait)
+        {
+            survicate.CallStatic("setUserTrait", trait.key, trait.value);
         }
 
         public static void Reset()

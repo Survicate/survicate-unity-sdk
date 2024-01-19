@@ -55,6 +55,11 @@ namespace Plugins.Survicate
             setUserTrait(traitKey, traitValue);
         }
 
+        public static void SetUserTrait(UserTrait trait)
+        {
+            setUserTrait(trait.key, trait.value);
+        }
+
         [DllImport("__Internal")]
         private static extern void reset();
 
