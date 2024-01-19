@@ -1,4 +1,5 @@
 #if UNITY_IOS
+using System;
 
 namespace Plugins.Survicate
 {
@@ -50,9 +51,15 @@ namespace Plugins.Survicate
         [DllImport("__Internal")]
         private static extern void setUserTrait(string traitKey, string traitValue);
 
+        [Obsolete("SetUserTrait(string, string) is deprecated, please use SetUserTrait(UserTrait) instead.")]
         public static void SetUserTrait(string traitKey, string traitValue)
         {
             setUserTrait(traitKey, traitValue);
+        }
+
+        public static void SetUserTrait(UserTrait trait)
+        {
+            setUserTrait(trait.key, trait.value);
         }
 
         [DllImport("__Internal")]
