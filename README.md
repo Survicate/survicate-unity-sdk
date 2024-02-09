@@ -92,3 +92,4 @@ Survicate.SetUserTrait(new UserTrait("isActive", true));
 Survicate.SetUserTrait(new UserTrait("birthDate", DateTime.Now));
 Survicate.Reset();
 ```
+For details refer to our [developer docs](https://developers.survicate.com/mobile-sdk/unity/).
