@@ -16,7 +16,7 @@ namespace Plugins.Survicate
         }
     }
 
-    [Serializable]
+    [System.Serializable]
     public class QuestionAnsweredEvent
     {
         public String surveyId;
@@ -41,7 +41,7 @@ namespace Plugins.Survicate
         }
     }
 
-    [Serializable]
+    [System.Serializable]
     public class SurvicateAnswer : ISerializationCallbackReceiver
     {
         public String type;
@@ -78,7 +78,7 @@ namespace Plugins.Survicate
         }
     }
 
-    [Serializable]
+    [System.Serializable]
     public class SurveyClosedEvent
     {
         public string surveyId;
@@ -89,7 +89,7 @@ namespace Plugins.Survicate
         }
     }
 
-    [Serializable]
+    [System.Serializable]
     public class SurveyCompletedEvent
     {
         public string surveyId;
