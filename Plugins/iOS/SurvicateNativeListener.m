@@ -57,79 +57,70 @@ static SurvicateNativeListener *shared = nil;
 }
 
 - (void)surveyDisplayedWithEvent:(SurveyDisplayedEvent * _Nonnull)event {
-    if (!_hasListeners) return;
-    if(_didSurveyDisplay != nil) {
-        NSDictionary *dictionary = @{
-            @"surveyId": event.surveyId
-        };
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:0 error:nil];
-
-        if(jsonData) {
-            NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-            const char *message = [jsonString UTF8String];
-            _didSurveyDisplay(message);
-        }
+    if (!_hasListeners || _didSurveyDisplay == nil) return;
+    NSDictionary *dictionary = @{
+        @"surveyId": event.surveyId
+    };
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:0 error:nil];
+    if(jsonData) {
+        NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        const char *message = [jsonString UTF8String];
+        _didSurveyDisplay(message);
     }
 }
 
 - (void)questionAnswered:(QuestionAnsweredEvent * _Nonnull)event {
-    if (!_hasListeners) return;
-    if(_didQuestionAnswered != nil) {
-        NSDictionary *answerDictionary = @{
-            @"value": event.answer.value ?: [NSNull null],
-            @"idSerialized": event.answer.id ?: [NSNull null],
-            @"type": event.answer.type ?: [NSNull null],
-            @"ids": event.answer.ids ?: @[],
-        };
-        NSDictionary *dictionary = @{
-            @"surveyId": event.surveyId,
-            @"surveyName": event.surveyName,
-            @"visitorUuid": event.visitorUUID,
-            @"responseUuid": event.responseUUID,
-            @"questionId": @(event.questionID),
-            @"question": event.question,
-            @"answer": answerDictionary,
-            @"panelAnswerUrl": event.panelAnswerUrl,
-        };
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:0 error:nil];
-        
-        if(jsonData) {
-            NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-            const char *message = [jsonString UTF8String];
-            _didQuestionAnswered(message);
-        }
+    if (!_hasListeners || _didQuestionAnswered == nil) return;
+    NSDictionary *answerDictionary = @{
+        @"value": event.answer.value ?: [NSNull null],
+        @"idSerialized": event.answer.id ?: [NSNull null],
+        @"type": event.answer.type ?: [NSNull null],
+        @"ids": event.answer.ids ?: @[],
+    };
+    NSDictionary *dictionary = @{
+        @"surveyId": event.surveyId,
+        @"surveyName": event.surveyName,
+        @"visitorUuid": event.visitorUUID,
+        @"responseUuid": event.responseUUID,
+        @"questionId": @(event.questionID),
+        @"question": event.question,
+        @"answer": answerDictionary,
+        @"panelAnswerUrl": event.panelAnswerUrl,
+    };
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:0 error:nil];
+    
+    if(jsonData) {
+        NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        const char *message = [jsonString UTF8String];
+        _didQuestionAnswered(message);
     }
 }
 
 - (void)surveyCompletedWithEvent:(SurveyCompletedEvent * _Nonnull)event {
-    if (!_hasListeners) return;
-    if(_didSurveyCompleted != nil) {
-        NSDictionary *dictionary = @{
-            @"surveyId": event.surveyId
-        };
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:0 error:nil];
-        
-        if(jsonData) {
-            NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-            const char *message = [jsonString UTF8String];
-            _didSurveyCompleted(message);
-        }
+    if (!_hasListeners || _didSurveyCompleted == nil) return;
+    NSDictionary *dictionary = @{
+        @"surveyId": event.surveyId
+    };
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:0 error:nil];
+    
+    if(jsonData) {
+        NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        const char *message = [jsonString UTF8String];
+        _didSurveyCompleted(message);
     }
 }
 
 - (void)surveyClosedWithEvent:(SurveyClosedEvent * _Nonnull)event {
-    if (!_hasListeners) return;
-    if(_didSurveyClosed != nil) {
-        NSDictionary *dictionary = @{
-            @"surveyId": event.surveyId
-        };
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:0 error:nil];
-        
-        if(jsonData) {
-            NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-            const char *message = [jsonString UTF8String];
-            _didSurveyClosed(message);
-        }
+    if (!_hasListeners || _didSurveyClosed == nil) return;
+    NSDictionary *dictionary = @{
+        @"surveyId": event.surveyId
+    };
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:0 error:nil];
+    
+    if(jsonData) {
+        NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        const char *message = [jsonString UTF8String];
+        _didSurveyClosed(message);
     }
 }
 
