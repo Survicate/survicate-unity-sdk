@@ -43,12 +43,17 @@ namespace Plugins.Survicate
             leaveScreen(screenKey);
         }
 
-        [DllImport("__Internal")]
-        private static extern void invokeEvent(string eventName);
+         [DllImport("__Internal")]
+        private static extern void invokeEvent(string eventName, string eventPropertiesJson);
 
         public static void InvokeEvent(string eventName)
         {
-            invokeEvent(eventName);
+            InvokeEvent(eventName, new Dictionary<string, string>());
+        }
+
+        public static void InvokeEvent(string eventName, Dictionary<string, string> eventProperties)
+        {
+            invokeEvent(eventName, SurvicateSerializer.serializeDictionary(eventProperties));
         }
 
         [DllImport("__Internal")]
