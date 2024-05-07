@@ -1,4 +1,5 @@
 #import <Survicate/Survicate-Swift.h>
+#import <SurvicateNativeListener.h>
 
 extern "C"
 {
@@ -10,6 +11,7 @@ void setWorkspaceKey(const char* key)
 void initialize()
 {
     [SurvicateSdk.shared initialize];
+    [SurvicateNativeListener.shared addListener];
 }
 
 void enterScreen(const char* screenKey)
@@ -22,9 +24,19 @@ void leaveScreen(const char* screenKey)
     [SurvicateSdk.shared leaveScreenWithValue:[NSString stringWithUTF8String:screenKey]];
 }
 
-void invokeEvent(const char* eventName)
+void invokeEvent(const char* eventName, const char* eventProperties)
 {
-    [SurvicateSdk.shared invokeEventWithName:[NSString stringWithUTF8String:eventName]];
+    NSString *jsonString = [[NSString alloc] initWithUTF8String:eventProperties];
+    if(jsonString == NULL || jsonString.length == 0) {
+        [SurvicateSdk.shared invokeEventWithName:[NSString stringWithUTF8String:eventName] with:@{}];
+    } else {
+        NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+        NSError *error;
+        NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
+        if (!error) {
+            [SurvicateSdk.shared invokeEventWithName:[NSString stringWithUTF8String:eventName] with:jsonDict];
+        }
+    }
 }
 
 void setUserTrait(const char* traitKey, const char* traitValue)
@@ -35,5 +47,35 @@ void setUserTrait(const char* traitKey, const char* traitValue)
 void reset()
 {
     [SurvicateSdk.shared reset];
+}
+
+void addSurvicateEventListener() 
+{
+    [SurvicateNativeListener.shared addListener];
+}
+
+void removeSurvicateEventListener() 
+{
+    [SurvicateNativeListener.shared removeListener];
+}
+
+void setSurveyDisplayedCallback(SurveyDisplayedCallback callback)
+{
+    [SurvicateNativeListener.shared registerSurveyDisplayedCallback:callback];
+}
+
+void setQuestionAnsweredCallback(QuestionAnsweredCallback callback)
+{
+    [SurvicateNativeListener.shared registerQuestionAnsweredCallback:callback];
+}
+
+void setSurveyClosedCallback(SurveyClosedCallback callback)
+{
+    [SurvicateNativeListener.shared registerSurveyClosedCallback:callback];
+}
+
+void setSurveyCompletedCallback(SurveyCompletedCallback callback)
+{
+    [SurvicateNativeListener.shared registerSurveyCompletedCallback:callback];
 }
 }
