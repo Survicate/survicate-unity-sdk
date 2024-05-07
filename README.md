@@ -88,13 +88,17 @@ Survicate.Initialize();
 Survicate.EnterScreen("your_screen_key");
 Survicate.LeaveScreen("your_screen_key");
 Survicate.InvokeEvent("your_event_name");
+Dictionary<string, string> eventProperties = new Dictionary<string, string>();
+eventProperties.Add("property1", "value1");
+eventProperties.Add("property2", "value2");
+Survicate.InvokeEvent("your_event_name", eventProperties);
 Survicate.SetUserTrait(new UserTrait("name", "John"));
 Survicate.SetUserTrait(new UserTrait("age", 25));
 Survicate.SetUserTrait(new UserTrait("count", 0.1));
 Survicate.SetUserTrait(new UserTrait("isActive", true));
 Survicate.SetUserTrait(new UserTrait("birthDate", DateTime.Now));
 Survicate.Reset();
-survicateEventListener = new SurvicateEventListener(
+SurvicateEventListener survicateEventListener = new SurvicateEventListener(
     (SurveyDisplayedEvent event) => /* implement action */,
     (QuestionAnsweredEvent event) => /* implement action */,
     (SurveyClosedEvent event) => /* implement action */,

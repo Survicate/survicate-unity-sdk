@@ -24,9 +24,19 @@ void leaveScreen(const char* screenKey)
     [SurvicateSdk.shared leaveScreenWithValue:[NSString stringWithUTF8String:screenKey]];
 }
 
-void invokeEvent(const char* eventName)
+void invokeEvent(const char* eventName, const char* eventProperties)
 {
-    [SurvicateSdk.shared invokeEventWithName:[NSString stringWithUTF8String:eventName]];
+    NSString *jsonString = [[NSString alloc] initWithUTF8String:eventProperties];
+    if(jsonString == NULL || jsonString.length == 0) {
+        [SurvicateSdk.shared invokeEventWithName:[NSString stringWithUTF8String:eventName] with:@{}];
+    } else {
+        NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+        NSError *error;
+        NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
+        if (!error) {
+            [SurvicateSdk.shared invokeEventWithName:[NSString stringWithUTF8String:eventName] with:jsonDict];
+        }
+    }
 }
 
 void setUserTrait(const char* traitKey, const char* traitValue)

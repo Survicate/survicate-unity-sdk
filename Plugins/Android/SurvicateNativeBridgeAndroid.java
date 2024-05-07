@@ -10,9 +10,11 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class SurvicateNativeBridgeAndroid {
@@ -35,8 +37,12 @@ public class SurvicateNativeBridgeAndroid {
         Survicate.leaveScreen(screenKey);
     }
 
-    public static void invokeEvent(String eventName) {
-        Survicate.invokeEvent(eventName);
+    public static void invokeEvent(String eventName, String eventProperties) {
+        try {
+            Survicate.invokeEvent(eventName, convertJsonToMap(eventProperties));
+        } catch (JSONException e) {
+            // silent
+        }
     }
 
     public static void setUserTrait(String traitKey, String traitValue) {
@@ -106,5 +112,21 @@ public class SurvicateNativeBridgeAndroid {
         if (nativeListener != null) {
             Survicate.removeEventListener(nativeListener);
         }
+    }
+
+    private static Map<String, String> convertJsonToMap(String json) throws JSONException {
+        if (json == null || json.isEmpty()) {
+            return new HashMap<>();
+        }
+
+        Map<String, String> map = new HashMap<>();
+
+        JSONObject jsonObject = new JSONObject(json);
+        for (Iterator<String> it = jsonObject.keys(); it.hasNext(); ) {
+            String key = it.next();
+            map.put(key, jsonObject.getString(key));
+        }
+
+        return map;
     }
 }

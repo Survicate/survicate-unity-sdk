@@ -35,7 +35,12 @@ namespace Plugins.Survicate
 
         public static void InvokeEvent(string eventName)
         {
-            survicate.CallStatic("invokeEvent", eventName);
+            InvokeEvent(eventName, new Dictionary<string, string>());
+        }
+
+        public static void InvokeEvent(string eventName, Dictionary<string, string> eventProperties)
+        {
+            survicate.CallStatic("invokeEvent", eventName, SurvicateSerializer.serializeDictionary(eventProperties));
         }
 
         [Obsolete("SetUserTrait(string, string) is deprecated, please use SetUserTrait(UserTrait) instead.")]
