@@ -73,7 +73,7 @@ namespace Plugins.Survicate
             proxyListener.removeListener(listener);
             if (proxyListener.getListenerCount() == 0)
             {
-                survicate.CallStatic("removeSurvicateEventListener", proxyListener);
+                survicate.CallStatic("removeSurvicateEventListener");
             }
         }
     }
