@@ -1,4 +1,4 @@
-# Surivcate mobile SDK unity wrapper
+# Survicate mobile SDK unity wrapper
 
 ## Installation
 
