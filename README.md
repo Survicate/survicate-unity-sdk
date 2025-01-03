@@ -16,9 +16,8 @@ Inside your exported Xcode project, on **Build Phases -> Link Binary With Librar
 
 - Add content of the Android directory to your Assets/Plugins/Android
 - Add SurvicatePluginAndroid.cs file inside your Assets/Plugins
-- Download the latest android SDK from [here](https://repo.survicate.com/latest/android/Survicate.aar). Place the downloaded AAR file inside Assets/Plugins/Android
-- Make sure **Android** is selected as plugin platform on **Inspector window**
-  > Add dependencies listed in developers documentations [here](https://developers.survicate.com/mobile-sdk/android/#installing-manually)
+- Define `https://repo.survicate.com` Maven repository in the project
+- Add Survicate SDK dependency to your app's `build.gradle` file.
 
 ## Configuration
 
@@ -35,29 +34,36 @@ Inside your exported Xcode project, on **Build Phases -> Link Binary With Librar
 </application>
 ```
 
-2. Add missing Survicate dependencies to your project `build.gradle` located under `android` directory.
+2. Define `https://repo.survicate.com` Maven repository in one of the following ways:
 
-```groovy {{title: "Project's build.gradle" }}
+```groovy
+// settingsTemplate.gradle
+dependencyResolutionManagement {
+    // ...
+    repositories {
+        // ...
+        maven { url 'https://repo.survicate.com' }
+    }
+}
+```
+
+```groovy
+// mainTemplate.gradle
+allprojects {
+    repositories {
+        // ...
+        maven { url 'https://repo.survicate.com' }
+    }
+}
+```
+
+3. Add Survicate SDK dependency to your app's `build.gradle` file.
+
+```groovy
+// mainTemplate.gradle
 dependencies {
     // ...
-    implementation files('libs/Survicate.aar')
-    implementation "androidx.appcompat:appcompat:1.6.1"
-    implementation "androidx.cardview:cardview:1.0.0"
-    implementation "androidx.recyclerview:recyclerview:1.3.2"
-    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
-    implementation "androidx.transition:transition:1.4.1"
-    implementation "androidx.annotation:annotation:1.7.1"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0"
-    implementation "com.squareup.moshi:moshi:1.15.1"
-    implementation "com.squareup.moshi:moshi-kotlin:1.15.1"
-
-    // since SDK version 2.0.0
-    implementation "io.coil-kt:coil-base:2.4.0"
-    implementation "io.coil-kt:coil-gif:2.4.0"
-    implementation "io.coil-kt:coil-svg:2.4.0"
-
-    // only up to SDK version 3.0.0
-    implementation "com.google.android.material:material:1.5.0"
+    implementation 'com.survicate:survicate-sdk:latest.release'
 }
 ```
 

@@ -8,8 +8,6 @@ import com.survicate.surveys.Survicate;
 import com.survicate.surveys.traits.UserTrait;
 import android.content.Context;
 
-import androidx.annotation.NonNull;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -57,7 +55,7 @@ public class SurvicateNativeBridgeAndroid {
     public static void addSurvicateEventListener(SurvicateNativeEventListener listener) {
         nativeListener = new SurvicateEventListener() {
             @Override
-            public void onSurveyDisplayed(@NonNull SurveyDisplayedEvent event) {
+            public void onSurveyDisplayed(SurveyDisplayedEvent event) {
                 Map<String, String> map = new HashMap<>();
                 map.put("surveyId", event.getSurveyId());
                 JSONObject json = new JSONObject(map);
@@ -66,7 +64,7 @@ public class SurvicateNativeBridgeAndroid {
             }
 
             @Override
-            public void onQuestionAnswered(@NonNull QuestionAnsweredEvent event) {
+            public void onQuestionAnswered(QuestionAnsweredEvent event) {
                 Map<String, Object> answerMap = new HashMap<>();
                 answerMap.put("type", event.getAnswer().getType());
                 answerMap.put("idSerialized", event.getAnswer().getId());
@@ -87,7 +85,7 @@ public class SurvicateNativeBridgeAndroid {
             }
 
             @Override
-            public void onSurveyClosed(@NonNull SurveyClosedEvent event) {
+            public void onSurveyClosed(SurveyClosedEvent event) {
                 Map<String, String> map = new HashMap<>();
                 map.put("surveyId", event.getSurveyId());
                 JSONObject json = new JSONObject(map);
@@ -96,7 +94,7 @@ public class SurvicateNativeBridgeAndroid {
             }
 
             @Override
-            public void onSurveyCompleted(@NonNull SurveyCompletedEvent event) {
+            public void onSurveyCompleted(SurveyCompletedEvent event) {
                 Map<String, String> map = new HashMap<>();
                 map.put("surveyId", event.getSurveyId());
                 JSONObject json = new JSONObject(map);
