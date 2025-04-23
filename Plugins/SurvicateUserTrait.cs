@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace Plugins.Survicate
 {
@@ -48,7 +49,7 @@ namespace Plugins.Survicate
             }
 
             this.key = key;
-            this.value = value.ToString();
+            this.value = value.ToString(CultureInfo.InvariantCulture);
         }
 
         public UserTrait(string key, bool value)
