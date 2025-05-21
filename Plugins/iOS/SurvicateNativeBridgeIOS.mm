@@ -49,6 +49,11 @@ void reset()
     [SurvicateSdk.shared reset];
 }
 
+void setLocale(const char* locale)
+{
+    [SurvicateSdk.shared setLocale:[NSString stringWithUTF8String:locale]];
+}
+
 void addSurvicateEventListener() 
 {
     [SurvicateNativeListener.shared addListener];

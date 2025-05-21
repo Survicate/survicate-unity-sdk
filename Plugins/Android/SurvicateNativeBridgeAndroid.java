@@ -52,6 +52,10 @@ public class SurvicateNativeBridgeAndroid {
         Survicate.reset();
     }
 
+    public static void setLocale(String locale) {
+        Survicate.setLocale(locale);
+    }
+
     public static void addSurvicateEventListener(SurvicateNativeEventListener listener) {
         nativeListener = new SurvicateEventListener() {
             @Override
