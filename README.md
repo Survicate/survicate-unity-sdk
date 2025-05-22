@@ -103,6 +103,7 @@ Survicate.SetUserTrait(new UserTrait("age", 25));
 Survicate.SetUserTrait(new UserTrait("count", 0.1));
 Survicate.SetUserTrait(new UserTrait("isActive", true));
 Survicate.SetUserTrait(new UserTrait("birthDate", DateTime.Now));
+Survicate.SetLocale("en-US");
 Survicate.Reset();
 SurvicateEventListener survicateEventListener = new SurvicateEventListener(
     (SurveyDisplayedEvent event) => /* implement action */,

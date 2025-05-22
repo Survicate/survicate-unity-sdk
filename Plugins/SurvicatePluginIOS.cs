@@ -79,6 +79,21 @@ namespace Plugins.Survicate
         }
 
         [DllImport("__Internal")]
+        private static extern void setLocale(string locale);
+        
+        public static void SetLocale(string locale)
+        {
+            if (locale != null)
+            {
+                setLocale(locale);
+            } 
+            else 
+            {
+                setLocale("");
+            }
+        }
+
+        [DllImport("__Internal")]
         private static extern void addSurvicateEventListener();
 
         public static void AddSurvicateEventListener(SurvicateEventListener listener)

@@ -59,6 +59,18 @@ namespace Plugins.Survicate
             survicate.CallStatic("reset");
         }
 
+        public static void SetLocale(string locale)
+        {
+            if (locale != null)
+            {
+                survicate.CallStatic("setLocale", locale);
+            }
+            else
+            {
+                survicate.CallStatic("setLocale", "");
+            }
+        }
+
         public static void AddSurvicateEventListener(SurvicateEventListener listener)
         {
             proxyListener.addListener(listener);
