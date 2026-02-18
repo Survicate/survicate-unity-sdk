@@ -80,17 +80,25 @@ namespace Plugins.Survicate
 
         [DllImport("__Internal")]
         private static extern void setLocale(string locale);
-        
+
         public static void SetLocale(string locale)
         {
             if (locale != null)
             {
                 setLocale(locale);
-            } 
-            else 
+            }
+            else
             {
                 setLocale("");
             }
+        }
+
+        [DllImport("__Internal")]
+        private static extern void setThemeMode(string mode);
+        
+        public static void SetThemeMode(ThemeMode mode)
+        {
+            setThemeMode(mode.ToString().ToUpper());
         }
 
         [DllImport("__Internal")]

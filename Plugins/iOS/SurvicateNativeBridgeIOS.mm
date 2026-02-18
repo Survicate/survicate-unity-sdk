@@ -54,6 +54,22 @@ void setLocale(const char* locale)
     [SurvicateSdk.shared setLocale:[NSString stringWithUTF8String:locale]];
 }
 
+void setThemeMode(const char* mode)
+{
+    NSString *modeString = [NSString stringWithUTF8String:mode];
+    ThemeMode themeMode;
+
+    if ([modeString isEqualToString:@"LIGHT"]) {
+        themeMode = ThemeModeLight;
+    } else if ([modeString isEqualToString:@"DARK"]) {
+        themeMode = ThemeModeDark;
+    } else {
+        themeMode = ThemeModeAuto;
+    }
+
+    [SurvicateSdk.shared setThemeMode:themeMode];
+}
+
 void addSurvicateEventListener() 
 {
     [SurvicateNativeListener.shared addListener];

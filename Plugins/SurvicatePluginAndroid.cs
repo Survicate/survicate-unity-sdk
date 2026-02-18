@@ -71,6 +71,11 @@ namespace Plugins.Survicate
             }
         }
 
+        public static void SetThemeMode(ThemeMode mode)
+        {
+            survicate.CallStatic("setThemeMode", mode.ToString().ToUpper());
+        }
+
         public static void AddSurvicateEventListener(SurvicateEventListener listener)
         {
             proxyListener.addListener(listener);
