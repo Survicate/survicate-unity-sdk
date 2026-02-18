@@ -6,6 +6,7 @@ import com.survicate.surveys.SurvicateEventListener;
 import com.unity3d.player.UnityPlayer;
 import com.survicate.surveys.Survicate;
 import com.survicate.surveys.traits.UserTrait;
+import com.survicate.surveys.ThemeMode;
 import android.content.Context;
 
 import org.json.JSONException;
@@ -54,6 +55,23 @@ public class SurvicateNativeBridgeAndroid {
 
     public static void setLocale(String locale) {
         Survicate.setLocale(locale);
+    }
+
+    public static void setThemeMode(String mode) {
+        ThemeMode themeMode;
+        switch (mode) {
+            case "LIGHT":
+                themeMode = ThemeMode.LIGHT;
+                break;
+            case "DARK":
+                themeMode = ThemeMode.DARK;
+                break;
+            case "AUTO":
+            default:
+                themeMode = ThemeMode.AUTO;
+                break;
+        }
+        Survicate.setThemeMode(themeMode);
     }
 
     public static void addSurvicateEventListener(SurvicateNativeEventListener listener) {
