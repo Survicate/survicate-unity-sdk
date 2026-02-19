@@ -104,6 +104,7 @@ Survicate.SetUserTrait(new UserTrait("count", 0.1));
 Survicate.SetUserTrait(new UserTrait("isActive", true));
 Survicate.SetUserTrait(new UserTrait("birthDate", DateTime.Now));
 Survicate.SetLocale("en-US");
+Survicate.SetThemeMode(ThemeMode.Auto); /* ThemeMode.Auto, ThemeMode.Light, ThemeMode.Dark */
 Survicate.Reset();
 SurvicateEventListener survicateEventListener = new SurvicateEventListener(
     (SurveyDisplayedEvent event) => /* implement action */,
