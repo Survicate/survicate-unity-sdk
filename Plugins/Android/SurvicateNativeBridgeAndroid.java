@@ -4,17 +4,23 @@ import com.survicate.surveys.SurveyCompletedEvent;
 import com.survicate.surveys.SurveyDisplayedEvent;
 import com.survicate.surveys.SurvicateEventListener;
 import com.unity3d.player.UnityPlayer;
+import com.survicate.surveys.ResponseAttribute;
 import com.survicate.surveys.Survicate;
 import com.survicate.surveys.traits.UserTrait;
 import com.survicate.surveys.ThemeMode;
+import com.survicate.surveys.SurvicateFontSystem;
+import com.survicate.surveys.FontSource;
 import android.content.Context;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import org.json.JSONArray;
 
 public class SurvicateNativeBridgeAndroid {
 
@@ -49,6 +55,24 @@ public class SurvicateNativeBridgeAndroid {
         Survicate.setUserTrait(trait);
     }
 
+    public static void setResponseAttributes(String attributesJson) {
+        try {
+            JSONArray array = new JSONArray(attributesJson);
+            List<ResponseAttribute> list = new ArrayList<>();
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject obj = array.getJSONObject(i);
+                String name = obj.getString("name");
+                String value = obj.getString("value");
+                String provider = obj.optString("provider", "");
+                String resolvedProvider = provider.isEmpty() ? null : provider;
+                list.add(new ResponseAttribute(name, value, resolvedProvider));
+            }
+            Survicate.setResponseAttributes(list);
+        } catch (JSONException e) {
+            // silent
+        }
+    }
+
     public static void reset() {
         Survicate.reset();
     }
@@ -72,6 +96,16 @@ public class SurvicateNativeBridgeAndroid {
                 break;
         }
         Survicate.setThemeMode(themeMode);
+    }
+
+    public static void setFonts(String regular, String regularItalic, String bold, String boldItalic) {
+        SurvicateFontSystem fontSystem = new SurvicateFontSystem(
+            new FontSource.AssetPath(regular),
+            new FontSource.AssetPath(regularItalic),
+            new FontSource.AssetPath(bold),
+            new FontSource.AssetPath(boldItalic)
+        );
+        Survicate.setFonts(fontSystem);
     }
 
     public static void addSurvicateEventListener(SurvicateNativeEventListener listener) {

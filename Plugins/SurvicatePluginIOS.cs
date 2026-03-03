@@ -70,6 +70,37 @@ namespace Plugins.Survicate
             setUserTrait(trait.key, trait.value);
         }
 
+        public static void SetResponseAttribute(ResponseAttribute attribute)
+        {
+            SetResponseAttributes(new List<ResponseAttribute> { attribute });
+        }
+
+        [DllImport("__Internal")]
+        private static extern void setResponseAttributes(string attributesJson);
+
+        public static void SetResponseAttributes(List<ResponseAttribute> attributes)
+        {
+            setResponseAttributes(SerializeResponseAttributes(attributes));
+        }
+
+        private static string SerializeResponseAttributes(List<ResponseAttribute> attributes)
+        {
+            var sb = new System.Text.StringBuilder();
+            sb.Append("[");
+            for (int i = 0; i < attributes.Count; i++)
+            {
+                var a = attributes[i];
+                sb.Append("{");
+                sb.Append($"\"name\":\"{a.name}\",");
+                sb.Append($"\"value\":\"{a.value}\",");
+                sb.Append($"\"provider\":\"{a.provider ?? ""}\"");
+                sb.Append("}");
+                if (i < attributes.Count - 1) sb.Append(",");
+            }
+            sb.Append("]");
+            return sb.ToString();
+        }
+
         [DllImport("__Internal")]
         private static extern void reset();
 
@@ -95,10 +126,18 @@ namespace Plugins.Survicate
 
         [DllImport("__Internal")]
         private static extern void setThemeMode(string mode);
-        
+
         public static void SetThemeMode(ThemeMode mode)
         {
             setThemeMode(mode.ToString().ToUpper());
+        }
+
+        [DllImport("__Internal")]
+        private static extern void setFonts(string regular, string regularItalic, string bold, string boldItalic);
+
+        public static void SetFonts(SurvicateFontSystem fontSystem)
+        {
+            setFonts(fontSystem.regular, fontSystem.regularItalic, fontSystem.bold, fontSystem.boldItalic);
         }
 
         [DllImport("__Internal")]
