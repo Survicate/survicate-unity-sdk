@@ -54,6 +54,35 @@ namespace Plugins.Survicate
             survicate.CallStatic("setUserTrait", trait.key, trait.value);
         }
 
+        public static void SetResponseAttribute(ResponseAttribute attribute)
+        {
+            SetResponseAttributes(new List<ResponseAttribute> { attribute });
+        }
+
+        public static void SetResponseAttributes(List<ResponseAttribute> attributes)
+        {
+            survicate.CallStatic("setResponseAttributes",
+                SerializeResponseAttributes(attributes));
+        }
+
+        private static string SerializeResponseAttributes(List<ResponseAttribute> attributes)
+        {
+            var sb = new System.Text.StringBuilder();
+            sb.Append("[");
+            for (int i = 0; i < attributes.Count; i++)
+            {
+                var a = attributes[i];
+                sb.Append("{");
+                sb.Append($"\"name\":\"{a.name}\",");
+                sb.Append($"\"value\":\"{a.value}\",");
+                sb.Append($"\"provider\":\"{a.provider ?? ""}\"");
+                sb.Append("}");
+                if (i < attributes.Count - 1) sb.Append(",");
+            }
+            sb.Append("]");
+            return sb.ToString();
+        }
+
         public static void Reset()
         {
             survicate.CallStatic("reset");
@@ -74,6 +103,15 @@ namespace Plugins.Survicate
         public static void SetThemeMode(ThemeMode mode)
         {
             survicate.CallStatic("setThemeMode", mode.ToString().ToUpper());
+        }
+
+        public static void SetFonts(SurvicateFontSystem fontSystem)
+        {
+            survicate.CallStatic("setFonts",
+                fontSystem.regular,
+                fontSystem.regularItalic,
+                fontSystem.bold,
+                fontSystem.boldItalic);
         }
 
         public static void AddSurvicateEventListener(SurvicateEventListener listener)

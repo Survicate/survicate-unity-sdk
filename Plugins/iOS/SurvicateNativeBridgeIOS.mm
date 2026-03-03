@@ -1,5 +1,31 @@
 #import <Survicate/Survicate-Swift.h>
 #import <SurvicateNativeListener.h>
+#import <CoreText/CoreText.h>
+
+static NSString* registerFontAndGetPostScriptName(NSString *relativePath)
+{
+    // Build absolute path to the font file inside the app bundle
+    NSString *fullPath = [[NSBundle mainBundle].bundlePath
+        stringByAppendingPathComponent:[@"Data/Raw"
+        stringByAppendingPathComponent:relativePath]];
+
+    NSURL *fontURL = [NSURL fileURLWithPath:fullPath];
+
+    // Read font descriptors from the file to extract metadata
+    CFArrayRef descriptors = CTFontManagerCreateFontDescriptorsFromURL((__bridge CFURLRef)fontURL);
+    if (!descriptors || CFArrayGetCount(descriptors) == 0) {
+        if (descriptors) CFRelease(descriptors);
+        return @"";
+    }
+
+    // Extract the PostScript name from the first font face in the file
+    CTFontDescriptorRef descriptor = (CTFontDescriptorRef)CFArrayGetValueAtIndex(descriptors, 0);
+    NSString *postScriptName = (__bridge_transfer NSString *)
+        CTFontDescriptorCopyAttribute(descriptor, kCTFontNameAttribute);
+    CFRelease(descriptors);
+
+    return postScriptName ?: @"";
+}
 
 extern "C"
 {
@@ -44,6 +70,26 @@ void setUserTrait(const char* traitKey, const char* traitValue)
     [SurvicateSdk.shared setUserTraitWithName:[NSString stringWithUTF8String:traitKey] value:[NSString stringWithUTF8String:traitValue]];
 }
 
+void setResponseAttributes(const char* attributesJson)
+{
+    NSString *jsonString = [NSString stringWithUTF8String:attributesJson];
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error;
+    NSArray *array = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
+    if (error || !array) return;
+
+    NSMutableArray<ResponseAttribute *> *list = [NSMutableArray array];
+    for (NSDictionary *dict in array) {
+        NSString *name = dict[@"name"];
+        NSString *value = dict[@"value"];
+        NSString *provider = dict[@"provider"];
+        if ([provider length] == 0) provider = nil;
+        ResponseAttribute *attr = [[ResponseAttribute alloc] initWithName:name value:value provider:provider];
+        [list addObject:attr];
+    }
+    [[SurvicateSdk shared] setResponseAttributes:list];
+}
+
 void reset()
 {
     [SurvicateSdk.shared reset];
@@ -70,7 +116,22 @@ void setThemeMode(const char* mode)
     [SurvicateSdk.shared setThemeMode:themeMode];
 }
 
-void addSurvicateEventListener() 
+void setFonts(const char* regular, const char* regularItalic, const char* bold, const char* boldItalic)
+{
+    NSString *regularName       = registerFontAndGetPostScriptName([NSString stringWithUTF8String:regular]);
+    NSString *regularItalicName = registerFontAndGetPostScriptName([NSString stringWithUTF8String:regularItalic]);
+    NSString *boldName          = registerFontAndGetPostScriptName([NSString stringWithUTF8String:bold]);
+    NSString *boldItalicName    = registerFontAndGetPostScriptName([NSString stringWithUTF8String:boldItalic]);
+
+    SurvicateFontSystem *fontSystem = [[SurvicateFontSystem alloc]
+        initWithRegular:regularName
+        regularItalic:regularItalicName
+        bold:boldName
+        boldItalic:boldItalicName];
+    [SurvicateSdk.shared setFonts:fontSystem];
+}
+
+void addSurvicateEventListener()
 {
     [SurvicateNativeListener.shared addListener];
 }

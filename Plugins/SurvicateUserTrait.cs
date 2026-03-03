@@ -27,7 +27,7 @@ namespace Plugins.Survicate
             }
 
             this.key = key;
-            this.value = FormatDateToTimeZoneIso(value);
+            this.value = SurvicateDateUtils.FormatDateToTimeZoneIso(value);
         }
 
         public UserTrait(string key, int value)
@@ -63,9 +63,5 @@ namespace Plugins.Survicate
             this.value = value.ToString().ToLower();
         }
 
-        private string FormatDateToTimeZoneIso(DateTime date)
-        {
-            return date.ToString("yyyy-MM-ddTHH:mm:sszzz");
-        }
     }
 }

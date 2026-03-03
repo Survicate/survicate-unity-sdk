@@ -89,23 +89,52 @@ On your C# script, import
 ```csharp
 using Plugins.Survicate;
 
+// Initialization
 Survicate.SetWorkspaceKey("your_workspace_key");
 Survicate.Initialize();
-Survicate.EnterScreen("your_screen_key");
-Survicate.LeaveScreen("your_screen_key");
+
+// Events
 Survicate.InvokeEvent("your_event_name");
 Dictionary<string, string> eventProperties = new Dictionary<string, string>();
 eventProperties.Add("property1", "value1");
 eventProperties.Add("property2", "value2");
 Survicate.InvokeEvent("your_event_name", eventProperties);
+
+// Screens
+Survicate.EnterScreen("your_screen_key");
+Survicate.LeaveScreen("your_screen_key");
+
+// User traits
 Survicate.SetUserTrait(new UserTrait("name", "John"));
 Survicate.SetUserTrait(new UserTrait("age", 25));
 Survicate.SetUserTrait(new UserTrait("count", 0.1));
 Survicate.SetUserTrait(new UserTrait("isActive", true));
 Survicate.SetUserTrait(new UserTrait("birthDate", DateTime.Now));
+
+// Locale
 Survicate.SetLocale("en-US");
+
+// Theme
 Survicate.SetThemeMode(ThemeMode.Auto); /* ThemeMode.Auto, ThemeMode.Light, ThemeMode.Dark */
-Survicate.Reset();
+
+// Custom fonts
+Survicate.SetFonts(new SurvicateFontSystem(
+    "fonts/MyFont-Regular.ttf",
+    "fonts/MyFont-RegularItalic.ttf",
+    "fonts/MyFont-Bold.ttf",
+    "fonts/MyFont-BoldItalic.ttf"
+));
+
+// Response attributes
+Survicate.SetResponseAttribute(new ResponseAttribute("plan", "premium"));
+Survicate.SetResponseAttributes(new List<ResponseAttribute> {
+    new ResponseAttribute("plan", "premium", "crm"),
+    new ResponseAttribute("isTrialExpired", false),
+    new ResponseAttribute("seats", 5),
+    new ResponseAttribute("renewalDate", DateTime.Now)
+});
+
+// Event listeners
 SurvicateEventListener survicateEventListener = new SurvicateEventListener(
     (SurveyDisplayedEvent event) => /* implement action */,
     (QuestionAnsweredEvent event) => /* implement action */,
@@ -114,6 +143,9 @@ SurvicateEventListener survicateEventListener = new SurvicateEventListener(
 );
 Survicate.AddSurvicateEventListener(survicateEventListener);
 Survicate.RemoveSurvicateEventListener(survicateEventListener);
+
+// Reset
+Survicate.Reset();
 ```
 
 ## Issues
