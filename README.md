@@ -74,7 +74,6 @@ dependencies {
    - Define `WorkspaceKey` *String* in `Survicate` *Dictionary*.
    Your `Info.plist` file should look like this:
    ![Info.plist example](https://developers.survicate.com/ios-infoplist.png)
-2. Run `pod update` in your `ios` directory.
 
 ### Initialization
 
