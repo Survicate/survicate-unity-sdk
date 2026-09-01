@@ -69,11 +69,14 @@ dependencies {
 
 ### Configuration for iOS
 
-1. Add workspace key to your `Info.plist` file.
-   - Create `Survicate` *Dictionary*.
-   - Define `WorkspaceKey` *String* in `Survicate` *Dictionary*.
-   Your `Info.plist` file should look like this:
-   ![Info.plist example](https://developers.survicate.com/ios-infoplist.png)
+Add workspace key to your `Info.plist` file:
+
+- Create `Survicate` *Dictionary*.
+- Define `WorkspaceKey` *String* in `Survicate` *Dictionary*.
+
+Your `Info.plist` file should look like this:
+
+![Info.plist example](https://developers.survicate.com/ios-infoplist.png)
 
 ### Initialization
 
