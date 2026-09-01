@@ -2,20 +2,20 @@
 
 ## Installation
 
+Clone or download this repository, then copy all `.cs` files from the [`Plugins`](Plugins) directory to `Assets/Plugins` in your Unity project. `SurvicatePluginIOS.cs` and `SurvicatePluginAndroid.cs` are wrapped in `#if UNITY_IOS` / `#if UNITY_ANDROID`, so copying the whole set is safe even if you build for one platform only. The platform-specific native files come next.
+
 ### iOS
 
-- Add content of the iOS directory to your Assets/Plugins/iOS
-- Add SurvicatePluginIOS.cs and file inside your Assets/Plugins
-- Download the latest iOS SDK from [here](https://repo.survicate.com/latest/ios/Survicate.zip). Copy this file to your xcode project folder.
+- Copy the files from the [`Plugins/iOS`](Plugins/iOS) directory (`SurvicateNativeBridgeIOS.mm`, `SurvicateNativeListener.h`, `SurvicateNativeListener.m`) to `Assets/Plugins/iOS` in your Unity project.
+- Download the latest iOS SDK from [here](https://repo.survicate.com/latest/ios/Survicate.zip), unzip it and copy `Survicate.xcframework` to your exported Xcode project folder.
 
 Inside your exported Xcode project, on **Build Phases -> Link Binary With Libraries**, add
 
-- survicate.xcframework
+- Survicate.xcframework
 
 ### Android
 
-- Add content of the Android directory to your Assets/Plugins/Android
-- Add SurvicatePluginAndroid.cs file inside your Assets/Plugins
+- Copy the files from the [`Plugins/Android`](Plugins/Android) directory (`SurvicateNativeBridgeAndroid.java`, `SurvicateNativeEventListener.java`) to `Assets/Plugins/Android` in your Unity project.
 - Define `https://repo.survicate.com` Maven repository in the project
 - Add Survicate SDK dependency to your app's `build.gradle` file.
 
@@ -72,13 +72,13 @@ dependencies {
 1. Add workspace key to your `Info.plist` file.
    - Create `Survicate` *Dictionary*.
    - Define `WorkspaceKey` *String* in `Survicate` *Dictionary*.
-   Your `Info.plist` file should looks like this:
-   ![Info.plist example](/ios-infoplist.png)
+   Your `Info.plist` file should look like this:
+   ![Info.plist example](https://developers.survicate.com/ios-infoplist.png)
 2. Run `pod update` in your `ios` directory.
 
 ### Initialization
 
-Initialize the SDK in your application using `initializeSdk()` method. Call this method only once, in the main script of your project.
+Initialize the SDK in your application using `Initialize()` method. Call this method only once, in the main script of your project.
 
 ---
 
